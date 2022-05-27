@@ -70,7 +70,7 @@ function TodoForm(props) {
           placeholder='Update your item' 
           value={input} 
           name='text' 
-          className="todo-input-light edit"
+          className="todo-input edit"
           onChange={handleChange} 
           ref={inputRef}
         />

@@ -65,16 +65,6 @@
     color: #fff;
   }
 
-  /* .todo-input-light {
-    padding: 14px 32px 14px 16px;
-    border-radius: 4px 0 0 4px;
-    border: 2px solid #000000;
-    outline: none;
-    width: 320px;
-    background: transparent;
-    color: #fff;
-  } */
-  
   .todo-input::placeholder {
     color: #e2e2e2;
   }
@@ -98,10 +88,6 @@
     border: 2px solid #149fff;
   }
 
-  /* .todo-input-light.edit {
-    border: 2px solid #000000;
-  } */
-  
   .todo-button.edit {
     background: linear-gradient(
       90deg,
