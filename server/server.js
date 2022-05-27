@@ -18,11 +18,63 @@ const connectionString = 'mongodb+srv://root:root@wtd.bsahy.mongodb.net/ToDo?ret
         console.log(`Server is running on port: ${port}`);
     });
     
-    app.post('/get', (req,res) => {
+    app.post('/getUserData/:id', (req,res) => {
         const servise = new userService();
-        servise.insertUser();
-        res.send(req.body);
+        servise.getUserData(req.params.id).then((result)=>{
+            res.send(result);
+        })
+        
     });
+
+    app.post('/api/registration', (req,res)=>{
+        const service = new userService();
+        service.RegistrationUser(req?.body)
+        res.status(200).send();
+
+    });
+
+    app.post('/api/login', (req,res)=>{
+        const service = new userService();
+       
+        service.LoginUser(req.body).then(result =>{
+            if (result === null || result ===undefined){
+                res.status(401)
+                res.send({
+                   error :  "Incorect login or password"}
+                );
+            }
+            else{
+                console.log(result)
+                res.send(result)
+            }
+            
+        })
+    });
+
+    app.post('/api/addNewTask/:id', (req,res) =>{
+        const service  = new userService();
+        service.AddNewTask(req.params.id, req.body).then(result =>{
+            res.status(200).send(result);
+        })
+       
+    });
+
+    app.get('/api/deleteTask/:id/:taskId', (req,res) => {
+        const service = new userService();
+
+        service.DeleteTask(req.params.id, req.params.taskId).then( result =>{
+            res.status(200).send(result)
+        });
+
+    });
+
+    app.get('/api/markIsDone/:id/:taskId', (req, res)=>{
+        const service = new userService();
+
+        service.MarkIsDone(req.params.id,req.params.taskId).then(result =>{
+            res.status(200).send();
+        })
+    })
 
 
 
