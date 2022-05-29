@@ -11,9 +11,9 @@ function MainPage() {
   let navigate = useNavigate();
 
   useEffect(() => {
-    if(localStorage.getItem("UserData") !== null || localStorage.getItem("UserData") !==undefined ){
-      navigate("/login");
-      }
+    if(localStorage.getItem("UserData") === null || localStorage.getItem("UserData") ===undefined ){
+       navigate("/login");
+    }
   });
 
   const changeTheme = () => {

@@ -28,8 +28,8 @@ const connectionString = 'mongodb+srv://root:root@wtd.bsahy.mongodb.net/ToDo?ret
 
     app.post('/api/registration', (req,res)=>{
         const service = new userService();
-        service.RegistrationUser(req?.body)
-        res.status(200).send();
+        const result = service.RegistrationUser(req?.body)
+        res.status(200).send(result);
 
     });
 

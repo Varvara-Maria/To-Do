@@ -20,13 +20,13 @@ module.exports = class UserService {
     }
 
     RegistrationUser(data){
-        
         User.create({
             name : data.name,
             email : data.email,
             password : data.password,
             location : "",
         })
+        return data;
     }
 
     LoginUser(data){
