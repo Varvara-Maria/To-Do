@@ -76,6 +76,16 @@ const connectionString = 'mongodb+srv://root:root@wtd.bsahy.mongodb.net/ToDo?ret
         })
     })
 
+    app.post('/api/changeLocation/:id', (req, res)=>{
+        const service = new userService();
+        service.ChangeLocation(req.params.id, req.body.location).then((result)=>{
+            service.getUserData(req.params.id).then((resss)=>{
+                res.status(200).send(resss);
+            });
+        })
+        
+    })
+
 
 
 

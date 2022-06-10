@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import './Weather.css'
 
@@ -20,22 +21,39 @@ function Weather() {
   }, [city]);
   
   useEffect(() => {
-    const localStorageTodos = JSON.parse(localStorage.getItem('weather'));
-    if (localStorageTodos !== null || localStorageTodos !== undefined) {
-      setWeather(localStorageTodos)
-    }
+    setCity(JSON.parse(localStorage.getItem('UserData')).location)
+    fetch(`${api.base}weather?q=${JSON.parse(localStorage.getItem('UserData')).location}&units=metric&appid=${api.key}`) // отправляем запрос
+        .then(res => res.json())  // ответ преобразуем в json
+        .then(result => {         // работаем с результатом
+          setWeather(result);
+          setCity('');
+        });
   }, []);
 
+  const setLocationUser = (location) =>{
+    console.log(JSON.parse(localStorage.getItem("UserData"))._id)
+    axios.post(`http://localhost:4000/api/changeLocation/${JSON.parse(localStorage.getItem("UserData"))._id}`, {
+      location : location
+    }).then((res)=>{
+      console.log(res.data);
+      localStorage.setItem("UserData", JSON.stringify(res.data));
+    }).catch((err)=>{
+      console.log(err);
+    })
+  }
 
   // обработчик, который срабатывает когда нажата клавиша Enter
   const search = evt => {
+    console.log(evt.target.value);
+    
     if (evt.key === 'Enter') {
       fetch(`${api.base}weather?q=${city}&units=metric&appid=${api.key}`) // отправляем запрос
         .then(res => res.json())  // ответ преобразуем в json
         .then(result => {         // работаем с результатом
           setWeather(result);
           setCity('');
-          localStorage.setItem('weather', JSON.stringify(result));
+          setLocationUser(evt.target.value)
+          // localStorage.setItem('weather', JSON.stringify(result));
         });
     }
   }

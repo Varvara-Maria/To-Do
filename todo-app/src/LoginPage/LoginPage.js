@@ -27,7 +27,29 @@ export const LoginPage = () => {
 				localStorage.setItem("UserData", JSON.stringify(res.data));
 				navigate("/")
 			}
-			else setErrorMessage("Error");
+			
+		}).catch((err)=>{
+			setErrorMessage(err.err);
+			setLoginPassword("");
+			
+		})
+	}
+
+	const signIn=(e)=>{
+		e.preventDefault();
+
+		axios.post('http://localhost:4000/api/login',{
+			email : loginMail,
+			password : loginPassword
+		}).then((res)=>{
+			console.log(res.data);
+			if(res.status === 200){
+				localStorage.setItem("UserData", JSON.stringify(res.data));
+				navigate("/");
+			}
+		}).catch((err)=>{
+			setErrorMessage("Incorrect Login or Password");
+			setLoginPassword("");
 		})
 	}
 
@@ -54,11 +76,14 @@ export const LoginPage = () => {
 			</div>
 
 			<div class="login">
-				<form>
+				<form onSubmit = {(e)=>signIn(e)}>
 					<label for="chk" aria-hidden="true">Login</label>
-					<input type="email" name="email" placeholder="Email" required="" />
-					<input type="password" name="pswd" placeholder="Password" required="" />
-					<button>Login</button>
+					<input type="email" name="email" placeholder="Email" required onChange = {(e)=>setLoginMail(e.target.value)}  value = {loginMail} />
+					<input type="password" name="pswd" placeholder="Password" required onChange = {(e)=>setLoginPassword(e.target.value)} value = {loginPassword} />
+					<div className="error">
+						<p>{errorMessage}</p>
+					</div>
+					<button type = "submit">Login</button>
 				</form>
 			</div>
 	</div>

@@ -30,6 +30,7 @@ module.exports = class UserService {
     }
 
     LoginUser(data){
+        console.log(data);
         return User.findOne({email : data.email, password : data.password, }, (err, res)=>{
             if(err) {
                 console.log(err)
@@ -76,6 +77,15 @@ module.exports = class UserService {
         }).catch((err) => {
             console.log(err)
         });
+    }
+
+    async ChangeLocation(id, location){
+        await this.getUserData(id).then(async(result) => {
+            result.location = location;
+            await User.findOneAndUpdate({_id : result._id}, {location : result.location}, {upsert : true});
+        }).catch((err)=>{
+            console.log(err);
+        })
     }
 
 
