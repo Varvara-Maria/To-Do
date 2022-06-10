@@ -41,13 +41,14 @@ module.exports = class UserService {
     }
 
     async AddNewTask(id, data){
-        const task = new Task(data.task, data.datetime)
+        const task = new Task(data.task)
         await this.getUserData(id).then( async (user)=>{
             user.ToDoList.push({...task});
             console.log(user.ToDoList)
             try{
                 console.log(user.ToDoList)
                 await User.updateOne({_id : user._id}, { ToDoList : user.ToDoList }, {upsert : true});
+
             }catch(e){
                 console.log(e)
             }
@@ -71,7 +72,16 @@ module.exports = class UserService {
         await this.getUserData(id).then(async(result) => {
            let task =  await result.ToDoList.find(x=>x.id == taskId);
            result.ToDoList.remove(task);
-           task.isDone = true;
+           switch(task.isDone){
+               case true: {
+                   task.isDone = false;
+                   break;
+               }
+               case false : {
+                    task.isDone = true;
+                    break
+               }
+           }
            result.ToDoList.push(task);
            await User.findOneAndUpdate({_id : result._id}, {ToDoList : result.ToDoList}, {upsert : true});
         }).catch((err) => {
@@ -88,7 +98,26 @@ module.exports = class UserService {
         })
     }
 
-
+    async UpdateTask(id, taskid,data){
+        await this.getUserData(id).then(async (result) => {
+            console.log(data)
+            let list = result.ToDoList;
+            console.log(list);
+            let findTask = list.find(x=>x.id == taskid)
+            console.log("DATA", data.task)
+            findTask.task = data.task;
+            console.log("DATA FIND", findTask)
+            let res = list.filter(x=>x.id != taskid);
+            
+            res.push(findTask);
+            console.log(res)
+            console.log(res);
+            await User.findOneAndUpdate({_id : id}, {ToDoList : res}, {upsert : true});
+            
+        }).catch((err)=>{
+            console.log(err);
+        })
+    }
 
 
     

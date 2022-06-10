@@ -18,11 +18,12 @@ const connectionString = 'mongodb+srv://root:root@wtd.bsahy.mongodb.net/ToDo?ret
         console.log(`Server is running on port: ${port}`);
     });
     
-    app.post('/getUserData/:id', (req,res) => {
+    app.get('/api/getUserData/:id', (req,res) => {
         const servise = new userService();
         servise.getUserData(req.params.id).then((result)=>{
             res.send(result);
         })
+        
         
     });
 
@@ -54,8 +55,12 @@ const connectionString = 'mongodb+srv://root:root@wtd.bsahy.mongodb.net/ToDo?ret
     app.post('/api/addNewTask/:id', (req,res) =>{
         const service  = new userService();
         service.AddNewTask(req.params.id, req.body).then(result =>{
-            res.status(200).send(result);
-        })
+            service.getUserData(req.params.id).then((result)=>{
+                res.status(200).send(result);
+            });
+            
+
+        }) 
        
     });
 
@@ -72,7 +77,10 @@ const connectionString = 'mongodb+srv://root:root@wtd.bsahy.mongodb.net/ToDo?ret
         const service = new userService();
 
         service.MarkIsDone(req.params.id,req.params.taskId).then(result =>{
-            res.status(200).send();
+            service.getUserData(req.params.id).then((user)=>{
+                res.status(200).send(user);
+            })
+            
         })
     })
 
@@ -84,6 +92,16 @@ const connectionString = 'mongodb+srv://root:root@wtd.bsahy.mongodb.net/ToDo?ret
             });
         })
         
+    })
+
+    app.post('/api/updateTask/:id/:taskid', (req,res)=>{
+        const service = new userService();
+        console.log(req.body);
+        service.UpdateTask(req.params.id, req.params.taskid, req.body).then((result)=>{
+            service.getUserData(req.params.id).then( user => {
+                res.send(user);
+            })
+        })
     })
 
 

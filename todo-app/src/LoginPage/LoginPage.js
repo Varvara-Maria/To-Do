@@ -23,7 +23,6 @@ export const LoginPage = () => {
 		}).then((res)=>{
 			console.log(res);
 			if(res.status ===200){
-				
 				localStorage.setItem("UserData", JSON.stringify(res.data));
 				navigate("/")
 			}
@@ -31,7 +30,7 @@ export const LoginPage = () => {
 		}).catch((err)=>{
 			setErrorMessage(err.err);
 			setLoginPassword("");
-			
+
 		})
 	}
 

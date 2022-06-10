@@ -7,14 +7,18 @@ import {TiEdit} from 'react-icons/ti';
 function Todo({todos, completeTodo, removeTodo, updateTodo}) {
     const [edit, setEdit] = useState({
         id: null,
-        value: '',
+        task: '',
     });
+
+    useEffect(()=>{
+        console.log(todos)
+    },[])
 
     const submitUpdate = value => {
         updateTodo(edit.id, value)
         setEdit({
             id: null,
-            value: ''
+            task: ''
         });
     };
 
@@ -23,13 +27,14 @@ function Todo({todos, completeTodo, removeTodo, updateTodo}) {
         return <TodoForm edit={edit} onSubmit={submitUpdate} />;
     }
 
+    
   return todos?.map((todo, index) => (
         <div 
-            className={todo.isComplete ? 'todo-row complete' : 'todo-row'} 
-            key={index}
+            className={todo.isDone ? 'todo-row complete' : 'todo-row'} 
+            key={todo._id}
         >
             <div key={todo.id} onClick={() => completeTodo(todo.id)}>
-                {todo.text}
+                {todo.task}
             </div>
             <div className='icons'>
                 <RiCloseCircleLine 
@@ -37,7 +42,7 @@ function Todo({todos, completeTodo, removeTodo, updateTodo}) {
                     className='delete-icon'
                 />
                 <TiEdit 
-                    onClick={() => setEdit({ id: todo.id, value: todo.text })}
+                    onClick={() => setEdit({ id: todo.id, value: todo.task})}
                     className='edit-icon'
                 />
             </div>

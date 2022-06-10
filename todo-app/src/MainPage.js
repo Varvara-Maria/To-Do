@@ -4,6 +4,7 @@ import ToDoList from './components/ToDoList';
 import Weather from './weather/Weather';
 import {useNavigate} from 'react-router-dom';
 import Timer from './timer/Timer'
+import axios from 'axios';
 
 function MainPage() {
 
@@ -11,10 +12,22 @@ function MainPage() {
   let navigate = useNavigate();
 
   useEffect(() => {
-    if(localStorage.getItem("UserData") === null || localStorage.getItem("UserData") ===undefined ){
-       navigate("/login");
+    if(localStorage.getItem("UserData") === null || localStorage.getItem("UserData") === undefined ){
+      console.log("work")
+      navigate("/login");
     }
-  });
+    else{
+      console.log(JSON.parse(localStorage.getItem('UserData'))._id)
+      axios.get(`http://localhost:4000/api/getUserData/${JSON.parse(localStorage.getItem('UserData'))._id}`).then((res)=>{
+        localStorage.setItem('UserData', JSON.stringify(res.data))
+        console.log(res)
+      }).catch((err)=>{
+        console.log("catch")
+        localStorage.removeItem('UserData');
+        navigate("/login");
+      })
+    }
+  },[]);
 
   const changeTheme = () => {
     switch(lightTheme) {
