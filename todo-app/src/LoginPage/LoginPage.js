@@ -32,7 +32,7 @@ export const LoginPage = () => {
 	}
 
   return (
-    <div class="s">  	
+    <div class="main">  	
 		<input type="checkbox" id="chk" aria-hidden="true" />
 
 			<div class="signup">

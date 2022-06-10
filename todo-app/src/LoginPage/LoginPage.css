@@ -74,7 +74,7 @@ body{
 	transform: translateY(-180px);
 	transition: .8s ease-in-out;
 }
-.login label{
+.main label{
 	color: #573b8a;
 	transform: scale(.6);
 }
