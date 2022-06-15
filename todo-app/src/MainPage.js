@@ -45,7 +45,7 @@ function MainPage() {
   return (
       <div className="app" style={lightTheme?{backgroundColor: 'white'} : {}}>
         <Weather />
-        <div className="todo-app" style={lightTheme?{backgroundColor: 'grey'} : {}}>
+        <div className="todo-app" style={lightTheme?{backgroundColor: 'rgb(107, 105, 105)'} : {}}>
           <ToDoList Theme={lightTheme}/>
         </div>
         <div className="todo-timer">
