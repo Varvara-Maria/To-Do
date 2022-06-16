@@ -4,7 +4,7 @@ import './Timer.css';
 
 export default function Timer() {
 
-  const dateTimeAfterThreeDays = new Date("2022-08-26");
+  const dateTimeAfterThreeDays = new Date("2022-07-26");
 
   return (
     <div class='timer-todo'>

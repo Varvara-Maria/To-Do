@@ -55,40 +55,42 @@ export const LoginPage = () => {
 	}
 
   return (
-    <div class="main">  	
-		<input type="checkbox" id="chk" aria-hidden="true" />
+	<div className='container'>
+		<div class="main">  	
+			<input type="checkbox" id="chk" aria-hidden="true" />
 
-			<div class="signup">
-				<form onSubmit= {(e)=>signUp(e)}>
-					<label for="chk" aria-hidden="true">Sign up</label>
-					<input type="text" name="txt" placeholder="User name" required onChange ={(e)=>setName(e.target.value)} value ={name}/>
-					<input type="email" name="email" placeholder="Email" required onChange={(e)=>setRegMail(e.target.value)} value = {regMail}/>
-					<input type="password" name="pswd" placeholder="Password" required onChange ={(e)=> setRegPassword(e.target.value)} value ={regPassword} minLength = {4}/>
-                    <input type="password" name="pswd" placeholder="Repeat Password" required onChange ={(e)=>{
-						setRegConfirmPassword(e.target.value);
-						regPassword === e.target.value ? setErrorMessage("Passwords match") : setErrorMessage("Passwords do not match");
-					}} value ={regConfirmPassword}/>
-					<div className="error">
-						<p>{errorMessage}</p>
-					</div>
-					<div className="error">
-						<p>{err}</p>
-					</div>
-					<button type='submit'>Sign up</button>
-				</form>
-			</div>
+				<div class="signup">
+					<form onSubmit= {(e)=>signUp(e)}>
+						<label for="chk" aria-hidden="true">Sign up</label>
+						<input type="text" name="txt" placeholder="User name" required onChange ={(e)=>setName(e.target.value)} value ={name}/>
+						<input type="email" name="email" placeholder="Email" required onChange={(e)=>setRegMail(e.target.value)} value = {regMail}/>
+						<input type="password" name="pswd" placeholder="Password" required onChange ={(e)=> setRegPassword(e.target.value)} value ={regPassword} minLength = {4}/>
+						<input type="password" name="pswd" placeholder="Repeat Password" required onChange ={(e)=>{
+							setRegConfirmPassword(e.target.value);
+							regPassword === e.target.value ? setErrorMessage("Passwords match") : setErrorMessage("Passwords do not match");
+						}} value ={regConfirmPassword}/>
+						<div className="error">
+							<p>{errorMessage}</p>
+						</div>
+						<div className="error">
+							<p>{err}</p>
+						</div>
+						<button type='submit'>Sign up</button>
+					</form>
+				</div>
 
-			<div class="login">
-				<form onSubmit = {(e)=>signIn(e)}>
-					<label for="chk" aria-hidden="true">Login</label>
-					<input type="email" name="email" placeholder="Email" required onChange = {(e)=>setLoginMail(e.target.value)}  value = {loginMail} />
-					<input type="password" name="pswd" placeholder="Password" required onChange = {(e)=>setLoginPassword(e.target.value)} value = {loginPassword} />
-					<div className="error">
-						<p>{errorMessage}</p>
-					</div>
-					<button type = "submit">Login</button>
-				</form>
-			</div>
+				<div class="login">
+					<form onSubmit = {(e)=>signIn(e)}>
+						<label for="chk" aria-hidden="true">Login</label>
+						<input type="email" name="email" placeholder="Email" required onChange = {(e)=>setLoginMail(e.target.value)}  value = {loginMail} />
+						<input type="password" name="pswd" placeholder="Password" required onChange = {(e)=>setLoginPassword(e.target.value)} value = {loginPassword} />
+						<div className="error">
+							<p>{errorMessage}</p>
+						</div>
+						<button type = "submit">Login</button>
+					</form>
+				</div>
+		</div>
 	</div>
   )
 }

@@ -6,14 +6,9 @@
       'Lucida Sans', Arial, sans-serif;
   }
   
-  body {
-    position: relative;
-    background: linear-gradient(
-      90deg,
-      rgb(34, 179, 204) 0%,
-      rgb(159, 168, 255) 100%
-    );
-  }
+.my-app {
+  background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+}
 
 .app {
   display: flex;
