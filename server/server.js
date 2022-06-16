@@ -27,15 +27,15 @@ const connectionString = 'mongodb+srv://root:root@wtd.bsahy.mongodb.net/ToDo?ret
         
     });
 
-    app.post('/api/registration', (req,res)=>{
+    app.post('/api/registration',async (req,res)=>{
         const service = new userService();
-        const result = service.RegistrationUser(req?.body);
+        const result = await service.RegistrationUser(req?.body);
+        console.log(result);
         if (result === null){
             res.status(400).send({err : "Email is already used"});
-        }else res.status(200).send(result); 
-        
-
-    });
+        }else res.status(200).send(result);
+    }); 
+    
 
     app.post('/api/login', (req,res)=>{
         const service = new userService();

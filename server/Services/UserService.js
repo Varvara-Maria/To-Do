@@ -1,4 +1,5 @@
 
+const { ObjectId } = require('bson');
 const { model } = require('mongoose');
 const dbo = require('../db/dbConnection');
 const Task = require('../Models/Taks');
@@ -19,20 +20,29 @@ module.exports = class UserService {
         return User.findById(userId);
     }
 
-    RegistrationUser(data){
+    async RegistrationUser(data){
+        const isExist = await User.findOne({email:data.email});
         let result = {};
-        if(User.findOne({email : data.email}) === null || User.findOne({email : data.email}) === null){
-            User.create({
+        console.log(data)
+        console.log(isExist);
+        if (isExist !== null){
+            console.log("NULL") ;
+            return null
+        }else {
+            return User.create({
+                _id : new ObjectId(),
                 name : data.name,
                 email : data.email,
                 password : data.password,
                 location : "",
             }).then((res)=>{
-                result = res; 
-                console.log(result)
+                console.log(res)
+                return res;
+                
+            }).catch((err)=>{
+                return null;
             })
-            return result;
-        }else return null;
+        }
     }
 
     LoginUser(data){
