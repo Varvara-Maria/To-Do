@@ -11,6 +11,7 @@ export const LoginPage = () => {
 	const [regPassword, setRegPassword] = useState('')
 	const [regConfirmPassword, setRegConfirmPassword] = useState('');
 	const [name, setName] = useState('')
+	const [err,setErr] = useState("");
 
 	const [errorMessage, setErrorMessage] = useState('')
 
@@ -24,13 +25,14 @@ export const LoginPage = () => {
 			console.log(res);
 			if(res.status ===200){
 				localStorage.setItem("UserData", JSON.stringify(res.data));
-				navigate("/")
+				window.location = '/'
 			}
-			
+			if(res.status === 400){
+				setErr(res.data.err);
+			}
 		}).catch((err)=>{
-			setErrorMessage(err.err);
-			setLoginPassword("");
-
+			console.log(err)
+			setErrorMessage("Email is already used");
 		})
 	}
 
@@ -44,7 +46,7 @@ export const LoginPage = () => {
 			console.log(res.data);
 			if(res.status === 200){
 				localStorage.setItem("UserData", JSON.stringify(res.data));
-				navigate("/");
+				window.location = '/'
 			}
 		}).catch((err)=>{
 			setErrorMessage("Incorrect Login or Password");
@@ -61,7 +63,7 @@ export const LoginPage = () => {
 					<label for="chk" aria-hidden="true">Sign up</label>
 					<input type="text" name="txt" placeholder="User name" required onChange ={(e)=>setName(e.target.value)} value ={name}/>
 					<input type="email" name="email" placeholder="Email" required onChange={(e)=>setRegMail(e.target.value)} value = {regMail}/>
-					<input type="password" name="pswd" placeholder="Password" required onChange ={(e)=> setRegPassword(e.target.value)} value ={regPassword}/>
+					<input type="password" name="pswd" placeholder="Password" required onChange ={(e)=> setRegPassword(e.target.value)} value ={regPassword} minLength = {4}/>
                     <input type="password" name="pswd" placeholder="Repeat Password" required onChange ={(e)=>{
 						setRegConfirmPassword(e.target.value);
 						regPassword === e.target.value ? setErrorMessage("Passwords match") : setErrorMessage("Passwords do not match");
@@ -69,7 +71,9 @@ export const LoginPage = () => {
 					<div className="error">
 						<p>{errorMessage}</p>
 					</div>
-					
+					<div className="error">
+						<p>{err}</p>
+					</div>
 					<button type='submit'>Sign up</button>
 				</form>
 			</div>

@@ -20,13 +20,19 @@ module.exports = class UserService {
     }
 
     RegistrationUser(data){
-        User.create({
-            name : data.name,
-            email : data.email,
-            password : data.password,
-            location : "",
-        })
-        return data;
+        let result = {};
+        if(User.findOne({email : data.email}) === null || User.findOne({email : data.email}) === null){
+            User.create({
+                name : data.name,
+                email : data.email,
+                password : data.password,
+                location : "",
+            }).then((res)=>{
+                result = res; 
+                console.log(result)
+            })
+            return result;
+        }else return null;
     }
 
     LoginUser(data){

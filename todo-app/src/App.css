@@ -7,6 +7,7 @@
   }
   
   body {
+    position: relative;
     background: linear-gradient(
       90deg,
       rgb(34, 179, 204) 0%,
@@ -199,4 +200,17 @@
   content: url('https://raw.githubusercontent.com/JulioCodesSM/CodeSnippets/93e107608fe1bc02f456d78b158634e04a1b888a/ButtonToggleAnimation/images/moon-line.svg');
   background-color: #1f257f;
   transform: translateX(50px) rotate(360deg);
+}
+
+body #logout{
+  color :rgb(15, 51, 207);
+  width: 150px;
+  font-size: 22px;
+  height: 50px;
+  border: 1px solid rgb(15, 51, 207);
+  border-radius: 10px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
 }

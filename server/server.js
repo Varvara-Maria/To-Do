@@ -29,14 +29,16 @@ const connectionString = 'mongodb+srv://root:root@wtd.bsahy.mongodb.net/ToDo?ret
 
     app.post('/api/registration', (req,res)=>{
         const service = new userService();
-        const result = service.RegistrationUser(req?.body)
-        res.status(200).send(result);
+        const result = service.RegistrationUser(req?.body);
+        if (result === null){
+            res.status(400).send({err : "Email is already used"});
+        }else res.status(200).send(result); 
+        
 
     });
 
     app.post('/api/login', (req,res)=>{
         const service = new userService();
-       
         service.LoginUser(req.body).then(result =>{
             if (result === null || result ===undefined){
                 res.status(401)

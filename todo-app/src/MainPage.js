@@ -14,7 +14,7 @@ function MainPage() {
   useEffect(() => {
     if(localStorage.getItem("UserData") === null || localStorage.getItem("UserData") === undefined ){
       console.log("work")
-      navigate("/login");
+      window.location = "/login";
     }
     else{
       console.log(JSON.parse(localStorage.getItem('UserData'))._id)
@@ -24,7 +24,7 @@ function MainPage() {
       }).catch((err)=>{
         console.log("catch")
         localStorage.removeItem('UserData');
-        navigate("/login");
+        window.location = '/login';
       })
     }
   },[]);
@@ -52,6 +52,10 @@ function MainPage() {
           <input onClick={changeTheme} type="checkbox" id="toggle" />
           <label for="toggle" class="button"></label>
           <Timer />
+          <button id = "logout" onClick ={()=> {
+            localStorage.removeItem("UserData");
+            window.location = "/login";
+          } }>Logout</button>
         </div>
       </div>
   );
